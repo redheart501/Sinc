@@ -1,0 +1,16 @@
+PODS:
+  - SwiftyGif (4.2.0)
+
+DEPENDENCIES:
+  - SwiftyGif
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SwiftyGif
+
+SPEC CHECKSUMS:
+  SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
+
+PODFILE CHECKSUM: 37a2bdfbc903691e9c00e1ad9271b1e53cd45f0a
+
+COCOAPODS: 1.6.1
