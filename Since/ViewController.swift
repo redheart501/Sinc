@@ -11,34 +11,117 @@ import UIKit
 import SwiftyGif
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
-    
+    fileprivate var timer: Timer?
     @IBOutlet weak var imgViw: UIImageView!
+    @IBOutlet weak var lblDate: UILabel!
+    @IBOutlet weak var btnEdit: UIButton!
+    
+    var logoImages: [UIImage] = []
     let logoAnimationView = LogoAnimationView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let image = self.loadImageFromDiskWith(fileName: "gg")
         if image == nil {
-             imgViw.image = UIImage(named: "ZEPETO_CAPTURE")
+             imgViw.image = UIImage(named: "one")
         }else{
             imgViw.image = image
         }
-        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector (tap))  //Tap function will call when user tap on button
+        tapGesture.numberOfTapsRequired = 1
+        btnEdit.addGestureRecognizer(tapGesture)
+        addLongPressGesture()
+        logoImages.append(UIImage(named: "one.png")!)
+        logoImages.append(UIImage(named: "two.png")!)
+        logoImages.append(UIImage(named: "three.png")!)
+        logoImages.append(UIImage(named: "four.png")!)
+        logoImages.append(UIImage(named: "ZEPETO_CAPTURE.png")!)
+//        let previousDate = "2017-11-06"
+//        let currentDate = Date()
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        let previousDateFormated : Date? = dateFormatter.date(from: previousDate)
+//        let difference = currentDate.timeIntervalSince(previousDateFormated!)
+//        let differenceInDays = Int(difference/(60 * 60 * 24 ))
+//        let month = differenceInDays/12
+//        print(differenceInDays , difference ,previousDateFormated)
+
+        self.getRemainingTime()
         view.addSubview(logoAnimationView)
         logoAnimationView.pinEdgesToSuperView()
         logoAnimationView.logoGifImageView.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
+    fileprivate func getRemainingTime() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let startDate = "2017-11-06 08:11:12"
+        let currentDate = dateFormatter.string(from: Date())
+        
+        if currentDate != startDate {
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(calculateTime)), userInfo: nil, repeats: true)
+            RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
+            timer?.fire()
+        }
+        else {
+            self.timer?.invalidate()
+            self.timer = nil
+        }
+    }
+    
+    @objc func calculateTime() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+        let stdate : String = "2017-11-06 08:11:12"
+        let startDate = dateFormatter.date(from: stdate)!
+        let now = Date()
+        let day = now.interval(ofComponent: .day, fromDate: startDate)
+        let year = now.interval(ofComponent: .year, fromDate: startDate)
+        let month = now.interval(ofComponent: .month, fromDate: startDate)
+        let calendar = Calendar.current
+        
+        // Replace the hour (time) of both dates with 00:00
+        let date1 = calendar.startOfDay(for: now)
+        let date2 = calendar.startOfDay(for: startDate)
+        
+        let components = calendar.dateComponents([.day , .year , .month , .hour , .second], from: date2, to: date1)
+        self.lblDate.text = "\(components.year!) years , \(components.month!) months , \(components.day!) days"
+//        let formatter = DateComponentsFormatter()
+//        formatter.unitsStyle = .full // May delete the word brief to let Xcode show you the other options
+//        formatter.allowedUnits = [.month, .day, .hour]
+//        formatter.maximumUnitCount = 1   // Show just one unit (i.e. 1d vs. 1d 6hrs)
+//
+//        let stringDate = formatter.string(from: startDate, to: now)
+//        print(stringDate)
+     
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         logoAnimationView.logoGifImageView.startAnimatingGif()
     }
-    @IBAction func addImg(_ sender: Any) {
+    @objc func tap() {
         ImagePickerManager().pickImage(self){ image in
             //here is the image
             self.saveImage(imageName: "gg", image: image)
             self.imgViw.image = image
         }
     }
+    @objc func longPress(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == UIGestureRecognizer.State.ended {
+            let image = logoImages.randomElement()
+            self.saveImage(imageName: "gg", image: image!)
+            self.imgViw.image = image
+        }
+    }
+   
+    func addLongPressGesture(){
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(gesture:)))
+        longPress.minimumPressDuration = 1
+        self.btnEdit.addGestureRecognizer(longPress)
+    }
+
     func loadImageFromDiskWith(fileName: String) -> UIImage? {
         
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
@@ -205,5 +288,61 @@ class LogoAnimationView: UIView {
 extension ViewController: SwiftyGifDelegate {
     func gifDidStop(sender: UIImageView) {
         logoAnimationView.isHidden = true
+    }
+}
+extension Date {
+    func interval(ofComponent comp: Calendar.Component, fromDate date: Date) -> Int {
+        
+        let currentCalendar = Calendar.current
+        
+        guard let start = currentCalendar.ordinality(of: comp, in: .era, for: date) else { return 0 }
+        guard let end = currentCalendar.ordinality(of: comp, in: .era, for: self) else { return 0 }
+        
+        return end - start
+    }
+    /// Returns the amount of years from another date
+    func years(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.year], from: date, to: self).year ?? 0
+    }
+    /// Returns the amount of months from another date
+    func months(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.month], from: date, to: self).month ?? 0
+    }
+    /// Returns the amount of weeks from another date
+    func weeks(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.weekOfMonth], from: date, to: self).weekOfMonth ?? 0
+    }
+    /// Returns the amount of days from another date
+    func days(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.day], from: date, to: self).day ?? 0
+    }
+    /// Returns the amount of hours from another date
+    func hours(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.hour], from: date, to: self).hour ?? 0
+    }
+    /// Returns the amount of minutes from another date
+    func minutes(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.minute], from: date, to: self).minute ?? 0
+    }
+    /// Returns the amount of seconds from another date
+    func seconds(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.second], from: date, to: self).second ?? 0
+    }
+    /// Returns the amount of nanoseconds from another date
+    func nanoseconds(from date: Date) -> Int {
+        return Calendar.current.dateComponents([.nanosecond], from: date, to: self).nanosecond ?? 0
+    }
+    /// Returns the a custom time interval description from another date
+    func offset(from date: Date) -> String {
+        var result: String = ""
+        if years(from: date)   > 0 { return "\(years(from: date))y"   }
+        if months(from: date)  > 0 { return "\(months(from: date))M"  }
+        if weeks(from: date)   > 0 { return "\(weeks(from: date))w"   }
+        if seconds(from: date) > 0 { return "\(seconds(from: date))" }
+        if days(from: date)    > 0 { result = result + " " + "\(days(from: date)) D" }
+        if hours(from: date)   > 0 { result = result + " " + "\(hours(from: date)) H" }
+        if minutes(from: date) > 0 { result = result + " " + "\(minutes(from: date)) M" }
+        if seconds(from: date) > 0 { return "\(seconds(from: date))" }
+        return ""
     }
 }
