@@ -21,13 +21,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V30-ef-9xP">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ius-o2-EdS">
-                                <rect key="frame" x="158" y="605" width="59" height="34"/>
-                                <state key="normal" title="Edit">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <color key="titleShadowColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
-                                </state>
-                            </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APz-ST-4my">
                                 <rect key="frame" x="16" y="20" width="30" height="30"/>
                                 <constraints>
@@ -37,7 +30,7 @@
                                 <state key="normal" image="icons8-menu-filled-50"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTd-15-BZd">
-                                <rect key="frame" x="0.0" y="474" width="375" height="52"/>
+                                <rect key="frame" x="0.0" y="506" width="375" height="52"/>
                                 <color key="backgroundColor" red="0.14604922279792742" green="0.14604922279792742" blue="0.14604922279792742" alpha="0.60585387323943662" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="Nyi-Y1-P4o"/>
@@ -46,21 +39,30 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ius-o2-EdS">
+                                <rect key="frame" x="147" y="609" width="81" height="38"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.611603213028169" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="26"/>
+                                <state key="normal" title="Edit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="top" secondItem="V30-ef-9xP" secondAttribute="top" id="1pp-cX-dPG"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ius-o2-EdS" secondAttribute="trailing" constant="158" id="Abi-bK-cTL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ius-o2-EdS" secondAttribute="trailing" constant="147" id="Abi-bK-cTL"/>
                             <constraint firstItem="APz-ST-4my" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="MQN-zm-cI5"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="V30-ef-9xP" secondAttribute="trailing" id="Qkn-3L-zFt"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ius-o2-EdS" secondAttribute="bottom" constant="28" id="Udg-Dt-0gh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ius-o2-EdS" secondAttribute="bottom" constant="20" id="Udg-Dt-0gh"/>
                             <constraint firstItem="dTd-15-BZd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YQr-og-spH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dTd-15-BZd" secondAttribute="trailing" id="ZQ6-cu-fdQ"/>
                             <constraint firstItem="V30-ef-9xP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZmO-Mg-tb4"/>
-                            <constraint firstItem="Ius-o2-EdS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="158" id="bTe-ZV-zN2"/>
+                            <constraint firstItem="Ius-o2-EdS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="147" id="bTe-ZV-zN2"/>
                             <constraint firstAttribute="bottom" secondItem="V30-ef-9xP" secondAttribute="bottom" id="f7O-63-r5f"/>
                             <constraint firstItem="APz-ST-4my" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="iFo-JN-qTb"/>
-                            <constraint firstItem="Ius-o2-EdS" firstAttribute="top" secondItem="dTd-15-BZd" secondAttribute="bottom" constant="79" id="pX6-4e-iD2"/>
+                            <constraint firstItem="Ius-o2-EdS" firstAttribute="top" secondItem="dTd-15-BZd" secondAttribute="bottom" constant="51" id="pX6-4e-iD2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

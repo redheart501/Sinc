@@ -14,6 +14,7 @@
 		67082E6E2259CB2E000F9D26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67082E6D2259CB2E000F9D26 /* Assets.xcassets */; };
 		67082E712259CB2E000F9D26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67082E6F2259CB2E000F9D26 /* LaunchScreen.storyboard */; };
 		67082E7D2259F402000F9D26 /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 67082E7C2259F402000F9D26 /* logo.gif */; };
+		6709918022858E5200837D07 /* snowFlake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6709917F22858E5200837D07 /* snowFlake.swift */; };
 		6DCC6605CA7B5A44072B6BAE /* Pods_Since.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 999098F5345EF5A0B676A635 /* Pods_Since.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		67082E702259CB2E000F9D26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		67082E722259CB2E000F9D26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67082E7C2259F402000F9D26 /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = logo.gif; sourceTree = "<group>"; };
+		6709917F22858E5200837D07 /* snowFlake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = snowFlake.swift; sourceTree = "<group>"; };
 		999098F5345EF5A0B676A635 /* Pods_Since.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Since.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -76,6 +78,7 @@
 			children = (
 				67082E632259CB2D000F9D26 /* AppDelegate.swift */,
 				67082E652259CB2D000F9D26 /* ViewController.swift */,
+				6709917F22858E5200837D07 /* snowFlake.swift */,
 				67082E672259CB2D000F9D26 /* Main.storyboard */,
 				67082E6D2259CB2E000F9D26 /* Assets.xcassets */,
 				67082E6F2259CB2E000F9D26 /* LaunchScreen.storyboard */,
@@ -215,6 +218,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6709918022858E5200837D07 /* snowFlake.swift in Sources */,
 				67082E662259CB2D000F9D26 /* ViewController.swift in Sources */,
 				67082E642259CB2D000F9D26 /* AppDelegate.swift in Sources */,
 				67082E6C2259CB2D000F9D26 /* Since.xcdatamodeld in Sources */,
