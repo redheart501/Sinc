@@ -19,6 +19,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     var logoImages: [UIImage] = []
     let logoAnimationView = LogoAnimationView()
     
+    var appDelegate = UIApplication.shared.delegate as? AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white.withAlphaComponent(0.40)
@@ -113,6 +114,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         
         let components = calendar.dateComponents([.day , .year , .month , .hour , .second], from: date2, to: date1)
         self.lblDate.text = "\(components.year!) years , \(components.month!) months , \(components.day!) days"
+        self.appDelegate?.scheduleNotification(notificationType: self.lblDate.text! )
 //        let formatter = DateComponentsFormatter()
 //        formatter.unitsStyle = .full // May delete the word brief to let Xcode show you the other options
 //        formatter.allowedUnits = [.month, .day, .hour]
@@ -190,6 +192,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         }
         
     }
+    
 }
 
 class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -225,6 +228,9 @@ class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigatio
         alert.addAction(gallaryAction)
         alert.addAction(cancelAction)
         alert.popoverPresentationController?.sourceView = self.viewController!.view
+//        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.viewController!.view.bounds.midX, y: self.viewController!.view.bounds.height-70, width: 0, height: 0)
+//        UIPopoverController.permittedArrowDirect?ions = []
         viewController.present(alert, animated: true, completion: nil)
     }
     func openCamera(){
@@ -369,5 +375,11 @@ extension Date {
         if minutes(from: date) > 0 { result = result + " " + "\(minutes(from: date)) M" }
         if seconds(from: date) > 0 { return "\(seconds(from: date))" }
         return ""
+    }
+    func adding(days: Int) -> Date? {
+        var dateComponents = DateComponents()
+        dateComponents.day = days
+        
+        return NSCalendar.current.date(byAdding: dateComponents, to: self)
     }
 }

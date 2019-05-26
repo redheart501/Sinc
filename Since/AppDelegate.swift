@@ -8,14 +8,36 @@
 
 import UIKit
 import CoreData
-
+import UserNotifications
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let notificationCenter = UNUserNotificationCenter.current()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        application.beginBackgroundTask(withName: "showNotification", expirationHandler: nil)
+//
+//        let trigger = UNCalendarNotificationTrigger(dateMatching: DateComponents(hour: 23, minute: 30, weekday: 2), repeats: true)
+//        print(trigger.nextTriggerDate() ?? "nil")
+//
+//        let content = UNMutableNotificationContent()
+//        content.title = "title"
+//        content.body = "body"
+//        // make sure you give each request a unique identifier. (nextTriggerDate description)
+//        let request = UNNotificationRequest(identifier: "identify", content: content, trigger: trigger)
+//
+        notificationCenter.delegate = self
+        
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        
+        notificationCenter.requestAuthorization(options: options) {
+            (didAllow, error) in
+            if !didAllow {
+                print("User has declined notifications")
+            }
+        }
+        
         // Override point for customization after application launch.
         return true
     }
@@ -91,3 +113,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        completionHandler([.alert, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        if response.notification.request.identifier == "since" {
+            print("Handling notifications with the Local Notification Identifier")
+        }
+        
+        completionHandler()
+    }
+    
+    func scheduleNotification(notificationType: String) {
+        
+        let content = UNMutableNotificationContent() // Содержимое уведомления
+        let categoryIdentifire = "Delete Notification Type"
+        
+        content.title = "Since"
+        content.body = "we have been together " + notificationType
+        content.sound = UNNotificationSound.default
+        content.badge = 1
+        content.categoryIdentifier = categoryIdentifire
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: DateComponents(hour: 13, minute: 48), repeats: true)
+        let identifier = "since"
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        notificationCenter.add(request) { (error) in
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+            }
+        }
+        
+        let snoozeAction = UNNotificationAction(identifier: "Snooze", title: "Snooze", options: [])
+        let deleteAction = UNNotificationAction(identifier: "DeleteAction", title: "Delete", options: [.destructive])
+        let category = UNNotificationCategory(identifier: categoryIdentifire,
+                                              actions: [snoozeAction, deleteAction],
+                                              intentIdentifiers: [],
+                                              options: [])
+        
+        notificationCenter.setNotificationCategories([category])
+    }
+}
